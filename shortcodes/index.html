@@ -13,29 +13,33 @@
 
       <h1 id="shortcodes">Shortcodes</h1>
 
-<h2 id="episode-shortcodes">Episode&nbsp;Shortcodes</h2>
+<h2 id="episode-shortcodes">Episode Shortcodes</h2>
 
-<p>Use these in an episode&nbsp;post:</p>
+<p>Use these in an episode post:</p>
 
 <ul>
-  <li><code>[podlove-episode-downloads]</code>: Display downloads in a dropdown&nbsp;menu.</li>
-  <li><code>[podlove-episode-downloads style="buttons"]</code> : Display download buttons for all available&nbsp;formats.</li>
-  <li><code>[podlove-web-player]</code>: Display a web&nbsp;player.</li>
+  <li>
+<code>[podlove-episode-downloads]</code>: Display downloads in a dropdown menu.</li>
+  <li>
+<code>[podlove-episode-downloads style="buttons"]</code> : Display download buttons for all available formats.</li>
+  <li>
+<code>[podlove-web-player]</code>: Display a web player.</li>
 </ul>
 
-<h2 id="episode-data">Episode&nbsp;Data</h2>
+<h2 id="episode-data">Episode Data</h2>
 
-<p><code>[podlove-episode field="..."]</code> displays the fields&nbsp;data.</p>
+<p><code>[podlove-episode field="..."]</code> displays the fields data.</p>
 
 <p><strong>Parameters</strong>
-- field: (required) Name of the data field. Possible&nbsp;values:
+- field: (required) Name of the data field. Possible values:
 <code>
 title, subtitle, summary, slug, duration, chapters, image, record_date, publication_date
 </code></p>
 
 <ul>
-  <li>format: (optional) used by <code>duration</code> field. Possible values: <code>full</code>, <code>HH:MM:SS</code>. Default:&nbsp;<code>HH:MM:SS</code></li>
-  <li>date_format: (optional) used by <code>record_date</code> and <code>publication_date</code>. For options, see (date manual)[http://php.net/manual/en/function.date.php]. Defaults to WordPress&nbsp;settings.</li>
+  <li>format: (optional) used by <code>duration</code> field. Possible values: <code>full</code>, <code>HH:MM:SS</code>. Default: <code>HH:MM:SS</code>
+</li>
+  <li>date_format: (optional) used by <code>record_date</code> and <code>publication_date</code>. For options, see (date manual)[http://php.net/manual/en/function.date.php]. Defaults to WordPress settings.</li>
 </ul>
 
 <p><code>
@@ -46,58 +50,60 @@ title, subtitle, summary, slug, duration, chapters, image, record_date, publicat
 [podlove-episode field="chapters"]
 </code></p>
 
-<h2 id="podcast-data">Podcast&nbsp;Data</h2>
+<h2 id="podcast-data">Podcast Data</h2>
 
-<p><code>[podlove-podcast field="..."]</code> displays the fields&nbsp;data.
-Alias:&nbsp;<code>[podlove-show field="..."]</code></p>
+<p><code>[podlove-podcast field="..."]</code> displays the fields data.
+Alias: <code>[podlove-show field="..."]</code></p>
 
 <p><strong>Parameters</strong>
-- field: (required) Name of the data field. Possible&nbsp;values:
+- field: (required) Name of the data field. Possible values:
 <code>
 title, slug, subtitle, cover_image, summary, author_name, owner_name, owner_email,
 publisher_name, publisher_url, license_name, license_url, keywords, explicit,
 label, episode_prefix, media_file_base_uri, uri_delimiter, episode_number_length, language
 </code></p>
 
-<h2 id="contributors-module">Contributors&nbsp;module</h2>
+<h2 id="contributors-module">Contributors module</h2>
 
-<p><code>[podlove-contributors]</code> Lists all&nbsp;contributors.</p>
+<p><code>[podlove-contributors]</code> Lists all contributors.</p>
 
 <p><strong>Parameters</strong>
-- separator: (optional) Default: “,&nbsp;“</p>
+- separator: (optional) Default: “, “</p>
 
-<h2 id="episode-templates">Episode&nbsp;templates</h2>
+<h2 id="episode-templates">Episode templates</h2>
 
-<p><code>[podlove-template id="Template Title"]</code> Renders configured episode&nbsp;template.</p>
+<p><code>[podlove-template id="Template Title"]</code> Renders configured episode template.</p>
 
 <p><code>[podlove-template id="..."]</code></p>
 
 <p><strong>Parameters</strong></p>
 
 <ul>
-  <li>title: (required) Title of template to&nbsp;render.</li>
-  <li>autop: (optional) Wraps blocks of text in p tags. ‘yes’ or ‘no’. Default:&nbsp;‘yes’</li>
+  <li>title: (required) Title of template to render.</li>
+  <li>autop: (optional) Wraps blocks of text in p tags. ‘yes’ or ‘no’. Default: ‘yes’</li>
 </ul>
 
-<h1 id="podlove-publisher-modules">Podlove Publisher&nbsp;Modules</h1>
+<h1 id="podlove-publisher-modules">Podlove Publisher Modules</h1>
 
-<p>Modules can be compared to WordPress plugins. We use modules to keep the code base clean and decoupled. Furthermore, this system allows for easy activation/deactivation of modules without the risk to break&nbsp;stuff.</p>
+<p>Modules can be compared to WordPress plugins. We use modules to keep the code base clean and decoupled. Furthermore, this system allows for easy activation/deactivation of modules without the risk to break stuff.</p>
 
-<h2 id="creating-a-module">Creating A&nbsp;Module</h2>
+<h2 id="creating-a-module">Creating A Module</h2>
 
 <ul>
-  <li>each module lives in a separate directory in&nbsp;<code>/lib/modules</code></li>
-  <li>each module contains at least one file containing the main module&nbsp;class</li>
-  <li>each module class inherits from&nbsp;<code>\Podlove\Modules\Base</code></li>
+  <li>each module lives in a separate directory in <code>/lib/modules</code>
+</li>
+  <li>each module contains at least one file containing the main module class</li>
+  <li>each module class inherits from <code>\Podlove\Modules\Base</code>
+</li>
 </ul>
 
-<p>Each module has a <code>load()</code> method. This will be called to load the module. Here hooks can be registered, files be loaded etc. The module must not change any behavior before <code>load()</code> being&nbsp;called!</p>
+<p>Each module has a <code>load()</code> method. This will be called to load the module. Here hooks can be registered, files be loaded etc. The module must not change any behavior before <code>load()</code> being called!</p>
 
-<p>There should be protected properties <code>$module_name, $module_description</code>. They can be accessed from the outside via getters. See Base&nbsp;module.</p>
+<p>There should be protected properties <code>$module_name, $module_description</code>. They can be accessed from the outside via getters. See Base module.</p>
 
-<h2 id="naming-conventions">Naming&nbsp;Conventions</h2>
+<h2 id="naming-conventions">Naming Conventions</h2>
 
-<p>Directories, file names and class names are snake cased. Directories and file names are all lowercased, class names are <code>Camel_Snake_Cased</code>. The namespace is CamelCased.&nbsp;Example:</p>
+<p>Directories, file names and class names are snake cased. Directories and file names are all lowercased, class names are <code>Camel_Snake_Cased</code>. The namespace is CamelCased. Example:</p>
 
 <p><code>
 Plugin Name: Podlove Web Player
@@ -107,9 +113,10 @@ Class Name:  Podlove_Web_Player
 Namespace:   \Podlove\Modules\PodloveWebPlayer
 </code></p>
 
-<h3 id="example-module-file">Example Module&nbsp;File</h3>
+<h3 id="example-module-file">Example Module File</h3>
 
-<div class="highlight php "><table class="CodeRay"><tr>
+<div class="highlight php ">
+<table class="CodeRay"><tr>
   <td class="line-numbers" title="double click to toggle" ondblclick="with (this.firstChild.style) { display = (display == '') ? 'none' : '' }"><pre><a href="#n1" name="n1">1</a>
 <a href="#n2" name="n2">2</a>
 <a href="#n3" name="n3">3</a>
@@ -156,13 +163,13 @@ Namespace:   \Podlove\Modules\PodloveWebPlayer
 
 <h2 id="options">Options</h2>
 
-<p>A module can register its own options. This happens in a declarative way. The Publisher plugin will handle storage and form&nbsp;generation.</p>
+<p>A module can register its own options. This happens in a declarative way. The Publisher plugin will handle storage and form generation.</p>
 
-<h3 id="register-options">Register&nbsp;Options</h3>
+<h3 id="register-options">Register Options</h3>
 
-<p>Use the module method <code>public function register_option( $name, $input_type, $args )</code> to register an option. <code>$name</code> is the name of your option. There is no need to prefix it. Uniqueness is handled by the Publisher, so <code>"title"</code> would be an acceptable&nbsp;name.</p>
+<p>Use the module method <code>public function register_option( $name, $input_type, $args )</code> to register an option. <code>$name</code> is the name of your option. There is no need to prefix it. Uniqueness is handled by the Publisher, so <code>"title"</code> would be an acceptable name.</p>
 
-<p>Available input&nbsp;types:</p>
+<p>Available input types:</p>
 
 <ul>
   <li>string</li>
@@ -173,9 +180,10 @@ Namespace:   \Podlove\Modules\PodloveWebPlayer
   <li>image</li>
 </ul>
 
-<p>Right now there is no documentation on forms. Please look <a href="https://github.com/eteubert/podlove/blob/master/lib/form/input/builder.php">into the form builder file</a> for possible&nbsp;arguments.</p>
+<p>Right now there is no documentation on forms. Please look <a href="https://github.com/eteubert/podlove/blob/master/lib/form/input/builder.php">into the form builder file</a> for possible arguments.</p>
 
-<div class="highlight php "><table class="CodeRay"><tr>
+<div class="highlight php ">
+<table class="CodeRay"><tr>
   <td class="line-numbers" title="double click to toggle" ondblclick="with (this.firstChild.style) { display = (display == '') ? 'none' : '' }"><pre><a href="#n1" name="n1">1</a>
 <a href="#n2" name="n2">2</a>
 <a href="#n3" name="n3">3</a>
