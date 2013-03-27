@@ -34,10 +34,9 @@ a:hover {
 #main h1 {
   font-size: 40px;
   font-weight: normal;
-
   line-height: 40px;
-
   letter-spacing: -1px;
+  margin-bottom: 25px;
 }
 
 #main p {
