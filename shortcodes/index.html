@@ -84,141 +84,6 @@ label, episode_prefix, media_file_base_uri, uri_delimiter, episode_number_length
   <li>autop: (optional) Wraps blocks of text in p tags. ‘yes’ or ‘no’. Default: ‘yes’</li>
 </ul>
 
-<h1 id="podlove-publisher-modules">Podlove Publisher Modules</h1>
-
-<p>Modules can be compared to WordPress plugins. We use modules to keep the code base clean and decoupled. Furthermore, this system allows for easy activation/deactivation of modules without the risk to break stuff.</p>
-
-<h2 id="creating-a-module">Creating A Module</h2>
-
-<ul>
-  <li>each module lives in a separate directory in <code>/lib/modules</code>
-</li>
-  <li>each module contains at least one file containing the main module class</li>
-  <li>each module class inherits from <code>\Podlove\Modules\Base</code>
-</li>
-</ul>
-
-<p>Each module has a <code>load()</code> method. This will be called to load the module. Here hooks can be registered, files be loaded etc. The module must not change any behavior before <code>load()</code> being called!</p>
-
-<p>There should be protected properties <code>$module_name, $module_description</code>. They can be accessed from the outside via getters. See Base module.</p>
-
-<h2 id="naming-conventions">Naming Conventions</h2>
-
-<p>Directories, file names and class names are snake cased. Directories and file names are all lowercased, class names are <code>Camel_Snake_Cased</code>. The namespace is CamelCased. Example:</p>
-
-<p><code>
-Plugin Name: Podlove Web Player
-Directory:   podlove_web_player
-File Name:   podlove_web_player.php
-Class Name:  Podlove_Web_Player
-Namespace:   \Podlove\Modules\PodloveWebPlayer
-</code></p>
-
-<h3 id="example-module-file">Example Module File</h3>
-
-<div class="highlight php ">
-<table class="CodeRay"><tr>
-  <td class="line-numbers" title="double click to toggle" ondblclick="with (this.firstChild.style) { display = (display == '') ? 'none' : '' }"><pre><a href="#n1" name="n1">1</a>
-<a href="#n2" name="n2">2</a>
-<a href="#n3" name="n3">3</a>
-<a href="#n4" name="n4">4</a>
-<a href="#n5" name="n5">5</a>
-<a href="#n6" name="n6">6</a>
-<a href="#n7" name="n7">7</a>
-<a href="#n8" name="n8">8</a>
-<a href="#n9" name="n9">9</a>
-<strong><a href="#n10" name="n10">10</a></strong>
-<a href="#n11" name="n11">11</a>
-<a href="#n12" name="n12">12</a>
-<a href="#n13" name="n13">13</a>
-<a href="#n14" name="n14">14</a>
-<a href="#n15" name="n15">15</a>
-<a href="#n16" name="n16">16</a>
-<a href="#n17" name="n17">17</a>
-<a href="#n18" name="n18">18</a>
-<a href="#n19" name="n19">19</a>
-<strong><a href="#n20" name="n20">20</a></strong>
-</pre></td>
-  <td class="code"><pre><span style="font-weight:bold;color:#666">&lt;?php</span> 
-<span style="color:#080;font-weight:bold">namespace</span> <span style="color:#036;font-weight:bold">Podlove</span>\<span style="color:#036;font-weight:bold">Modules</span>\<span style="color:#036;font-weight:bold">PodloveWebPlayer</span>;
-
-<span style="color:#080;font-weight:bold">class</span> <span style="color:#B06;font-weight:bold">Podlove_Web_Player</span> <span style="color:#080;font-weight:bold">extends</span> \<span style="color:#036;font-weight:bold">Podlove</span>\<span style="color:#036;font-weight:bold">Modules</span>\<span style="color:#036;font-weight:bold">Base</span> {
-
-        <span style="color:#080;font-weight:bold">protected</span> <span style="color:#963">$module_name</span> = <span style="background-color:hsla(0,100%,50%,0.05)"><span style="color:#710">'</span><span style="color:#D20">Podlove Web Player</span><span style="color:#710">'</span></span>;
-        <span style="color:#080;font-weight:bold">protected</span> <span style="color:#963">$module_description</span> = <span style="background-color:hsla(0,100%,50%,0.05)"><span style="color:#710">'</span><span style="color:#D20">An audio player for the web</span><span style="color:#710">'</span></span>;
-
-        <span style="color:#080;font-weight:bold">public</span> <span style="color:#080;font-weight:bold">function</span> <span style="color:#06B;font-weight:bold">load</span>() {
-                <span style="color:#777">// register actions</span>
-                add_action( <span style="background-color:hsla(0,100%,50%,0.05)"><span style="color:#710">'</span><span style="color:#D20">podlove_dashboard_meta_boxes</span><span style="color:#710">'</span></span>, <span style="color:#369;font-weight:bold">array</span>( <span style="color:#963">$this</span>, <span style="background-color:hsla(0,100%,50%,0.05)"><span style="color:#710">'</span><span style="color:#D20">register_meta_boxes</span><span style="color:#710">'</span></span> ) );
-                <span style="color:#777">// require additional module files</span>
-                <span style="color:#369;font-weight:bold">require_once</span> <span style="background-color:hsla(0,100%,50%,0.05)"><span style="color:#710">'</span><span style="color:#D20">player/podlove-web-player/podlove-web-player.php</span><span style="color:#710">'</span></span>;
-        }
-
-        <span style="color:#080;font-weight:bold">public</span> <span style="color:#080;font-weight:bold">function</span> <span style="color:#06B;font-weight:bold">register_meta_boxes</span>() {
-                <span style="color:#777">// code ...</span>
-        }
-
-}</pre></td>
-</tr></table>
-</div>
-
-<h2 id="options">Options</h2>
-
-<p>A module can register its own options. This happens in a declarative way. The Publisher plugin will handle storage and form generation.</p>
-
-<h3 id="register-options">Register Options</h3>
-
-<p>Use the module method <code>public function register_option( $name, $input_type, $args )</code> to register an option. <code>$name</code> is the name of your option. There is no need to prefix it. Uniqueness is handled by the Publisher, so <code>"title"</code> would be an acceptable name.</p>
-
-<p>Available input types:</p>
-
-<ul>
-  <li>string</li>
-  <li>text</li>
-  <li>select</li>
-  <li>checkbox</li>
-  <li>radio</li>
-  <li>image</li>
-</ul>
-
-<p>Right now there is no documentation on forms. Please look <a href="https://github.com/eteubert/podlove/blob/master/lib/form/input/builder.php">into the form builder file</a> for possible arguments.</p>
-
-<div class="highlight php ">
-<table class="CodeRay"><tr>
-  <td class="line-numbers" title="double click to toggle" ondblclick="with (this.firstChild.style) { display = (display == '') ? 'none' : '' }"><pre><a href="#n1" name="n1">1</a>
-<a href="#n2" name="n2">2</a>
-<a href="#n3" name="n3">3</a>
-<a href="#n4" name="n4">4</a>
-<a href="#n5" name="n5">5</a>
-<a href="#n6" name="n6">6</a>
-<a href="#n7" name="n7">7</a>
-<a href="#n8" name="n8">8</a>
-<a href="#n9" name="n9">9</a>
-<strong><a href="#n10" name="n10">10</a></strong>
-<a href="#n11" name="n11">11</a>
-<a href="#n12" name="n12">12</a>
-<a href="#n13" name="n13">13</a>
-<a href="#n14" name="n14">14</a>
-<a href="#n15" name="n15">15</a>
-</pre></td>
-  <td class="code"><pre><span style="font-weight:bold;color:#666">&lt;?php</span>
-<span style="color:#777">// register options in load()</span>
-<span style="color:#963">$this</span>-&gt;register_option( <span style="background-color:hsla(0,100%,50%,0.05)"><span style="color:#710">'</span><span style="color:#D20">my setting</span><span style="color:#710">'</span></span>, <span style="background-color:hsla(0,100%,50%,0.05)"><span style="color:#710">'</span><span style="color:#D20">string</span><span style="color:#710">'</span></span>, <span style="color:#369;font-weight:bold">array</span>(
-        <span style="background-color:hsla(0,100%,50%,0.05)"><span style="color:#710">'</span><span style="color:#D20">label</span><span style="color:#710">'</span></span>       =&gt; __( <span style="background-color:hsla(0,100%,50%,0.05)"><span style="color:#710">'</span><span style="color:#D20">my setting</span><span style="color:#710">'</span></span>, <span style="background-color:hsla(0,100%,50%,0.05)"><span style="color:#710">'</span><span style="color:#D20">podlove</span><span style="color:#710">'</span></span> ),
-        <span style="background-color:hsla(0,100%,50%,0.05)"><span style="color:#710">'</span><span style="color:#D20">description</span><span style="color:#710">'</span></span> =&gt; __( <span style="background-color:hsla(0,100%,50%,0.05)"><span style="color:#710">'</span><span style="color:#D20">yada yada yada</span><span style="color:#710">'</span></span>, <span style="background-color:hsla(0,100%,50%,0.05)"><span style="color:#710">'</span><span style="color:#D20">podlove</span><span style="color:#710">'</span></span> ),
-        <span style="background-color:hsla(0,100%,50%,0.05)"><span style="color:#710">'</span><span style="color:#D20">default</span><span style="color:#710">'</span></span>     =&gt; <span style="background-color:hsla(0,100%,50%,0.05)"><span style="color:#710">'</span><span style="color:#D20">A sensible default</span><span style="color:#710">'</span></span>,
-        <span style="background-color:hsla(0,100%,50%,0.05)"><span style="color:#710">'</span><span style="color:#D20">html</span><span style="color:#710">'</span></span>        =&gt; <span style="color:#369;font-weight:bold">array</span>( <span style="background-color:hsla(0,100%,50%,0.05)"><span style="color:#710">'</span><span style="color:#D20">class</span><span style="color:#710">'</span></span> =&gt; <span style="background-color:hsla(0,100%,50%,0.05)"><span style="color:#710">'</span><span style="color:#D20">regular-text</span><span style="color:#710">'</span></span> )
-) );
-
-<span style="color:#963">$this</span>-&gt;register_option( <span style="background-color:hsla(0,100%,50%,0.05)"><span style="color:#710">'</span><span style="color:#D20">a_number</span><span style="color:#710">'</span></span>, <span style="background-color:hsla(0,100%,50%,0.05)"><span style="color:#710">'</span><span style="color:#D20">select</span><span style="color:#710">'</span></span>, <span style="color:#369;font-weight:bold">array</span>(
-        <span style="background-color:hsla(0,100%,50%,0.05)"><span style="color:#710">'</span><span style="color:#D20">label</span><span style="color:#710">'</span></span>       =&gt; __( <span style="background-color:hsla(0,100%,50%,0.05)"><span style="color:#710">'</span><span style="color:#D20">Number</span><span style="color:#710">'</span></span>, <span style="background-color:hsla(0,100%,50%,0.05)"><span style="color:#710">'</span><span style="color:#D20">podlove</span><span style="color:#710">'</span></span> ),
-        <span style="background-color:hsla(0,100%,50%,0.05)"><span style="color:#710">'</span><span style="color:#D20">description</span><span style="color:#710">'</span></span> =&gt; __( <span style="background-color:hsla(0,100%,50%,0.05)"><span style="color:#710">'</span><span style="color:#D20">Select a number</span><span style="color:#710">'</span></span>, <span style="background-color:hsla(0,100%,50%,0.05)"><span style="color:#710">'</span><span style="color:#D20">podlove</span><span style="color:#710">'</span></span> ),
-        <span style="background-color:hsla(0,100%,50%,0.05)"><span style="color:#710">'</span><span style="color:#D20">default</span><span style="color:#710">'</span></span>     =&gt; <span style="color:#00D">3</span>,
-        <span style="background-color:hsla(0,100%,50%,0.05)"><span style="color:#710">'</span><span style="color:#D20">options</span><span style="color:#710">'</span></span>     =&gt; <span style="color:#369;font-weight:bold">array</span>( <span style="color:#00D">1</span> =&gt; <span style="background-color:hsla(0,100%,50%,0.05)"><span style="color:#710">'</span><span style="color:#D20">one</span><span style="color:#710">'</span></span>, <span style="color:#00D">2</span> =&gt; <span style="background-color:hsla(0,100%,50%,0.05)"><span style="color:#710">'</span><span style="color:#D20">two</span><span style="color:#710">'</span></span>, <span style="color:#00D">3</span> =&gt; <span style="background-color:hsla(0,100%,50%,0.05)"><span style="color:#710">'</span><span style="color:#D20">three</span><span style="color:#710">'</span></span> )
-) );</pre></td>
-</tr></table>
-</div>
-
 
       
 
@@ -226,13 +91,13 @@ Namespace:   \Podlove\Modules\PodloveWebPlayer
     <div id="sidebar">
       <h2>Documentation</h2>
       <ul>
-        <li><a href="../basics/">Basics</a></li>
         <li><a href="./">Shortcodes</a></li>
+        <li><a href="../modules/">Modules</a></li>
         <li><a href="../migration/">Migration</a></li>
       </ul>
       <h2>Community</h2>
       <ul>
-        <li><a href="www.satoripress.com/podcast/">Status Podcast (german)</a></li>
+        <li><a href="http://www.satoripress.com/podcast/">Status Podcast (german)</a></li>
         <li><a href="https://twitter.com/podlove_ppp">Twitter Account</a></li>
         <li><a href="https://alpha.app.net/podlove">ADN Account</a></li>
       </ul>

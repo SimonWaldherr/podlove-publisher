@@ -1,0 +1,78 @@
+<!DOCTYPE HTML>
+<html lang="en">
+  <head>
+<meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+    <meta charset="utf-8">
+    <title>A Brand New nanoc Site - Migration</title>
+    <link rel="stylesheet" href="../style.css">
+
+    <!-- you don't need to keep this, but it's cool for stats! -->
+    <meta name="generator" content="nanoc 3.6.2"> 
+  </head>
+  <body>
+    <div id="main">
+
+      <h1 id="migrating-your-podcast">Migrating your Podcast</h1>
+
+<h2 id="who-is-this-for">Who is this for?</h2>
+
+<ul>
+  <li>you already have a WordPress based podcast and want to switch to the Podlove Publisher</li>
+  <li>explicit support for podPress and PowerPress</li>
+  <li>should be possible to migrate any WordPress data based on “enclosures”. Not sure? Just try, you’ll see if the assistant can detect the episodes.</li>
+</ul>
+
+<h2 id="what-will-be-migrated">What will be migrated?</h2>
+
+<ul>
+  <li>url redirect</li>
+  <li>assets will be created</li>
+  <li>feeds for the assets will be created</li>
+  <li>some metadata: subtitle, summary, duration</li>
+  <li>post text will be untouched except: all players will be removed</li>
+  <li>all comments</li>
+  <li>all metadata except enclosures (because they are stored differently now)</li>
+</ul>
+
+<h2 id="will-my-podcast-work-while-i-try-to-migrate">Will my podcast work while I try to migrate?</h2>
+
+<p>Yes. The Migration assistant only <em>looks</em> at your existing data, it <em>does not change anything</em>. Even when you start the migration, all new episodes will be created <em>pending</em>, meaning you can preview them to check if everything looks as expected — while your old system still works like before. Only when you have verified that everything looks fine you hit the switch which turns off all old posts and publishes all the new episodes. Even at this point your old posts still exist — only they are not accessible by the public.</p>
+
+<h2 id="what-should-you-do-before-you-migrate">What should you do before you migrate?</h2>
+
+<ul>
+  <li>backup</li>
+  <li>move all media files to the same url directory</li>
+</ul>
+
+<h2 id="troubleshooting">Troubleshooting</h2>
+
+<ul>
+  <li>If you are using a caching plugin, please clear the cache</li>
+</ul>
+
+
+      
+
+    </div>
+    <div id="sidebar">
+      <h2>Documentation</h2>
+      <ul>
+        <li><a href="../shortcodes/">Shortcodes</a></li>
+        <li><a href="../modules/">Modules</a></li>
+        <li><a href="./">Migration</a></li>
+      </ul>
+      <h2>Community</h2>
+      <ul>
+        <li><a href="http://www.satoripress.com/podcast/">Status Podcast (german)</a></li>
+        <li><a href="https://twitter.com/podlove_ppp">Twitter Account</a></li>
+        <li><a href="https://alpha.app.net/podlove">ADN Account</a></li>
+      </ul>
+      <h2>Development</h2>
+      <ul>
+        <li><a href="https://github.com/podlove/podlove-publisher">GitHub Repository</a></li>
+        <li><a href="https://trello.com/board/podlove-publisher/508293f65573fa3f62004e0a">Trello Board</a></li>
+      </ul>
+    </div>
+  </body>
+</html>
