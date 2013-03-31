@@ -223,6 +223,7 @@ class EpisodeAsset {
 			\Podlove\Form\build_for( $asset_assignment, $form_attributes, function ( $form ) {
 				$wrapper = new \Podlove\Form\Input\TableWrapper( $form );
 				$asset_assignment = $form->object;
+
 				$artwork_options = array(
 					'0'      => __( 'None', 'podlove' ),
 					'manual' => __( 'Manual Entry', 'podlove' ),
@@ -234,7 +235,6 @@ class EpisodeAsset {
 						$artwork_options[ $episode_asset->id ] = sprintf( __( 'Asset: %s', 'podlove' ), $episode_asset->title );
 					}
 				}
-
 				$wrapper->select( 'image', array(
 					'label'   => __( 'Episode Image', 'podlove' ),
 					'options' => $artwork_options
@@ -254,6 +254,22 @@ class EpisodeAsset {
 				$wrapper->select( 'chapters', array(
 					'label'   => __( 'Episode Chapters', 'podlove' ),
 					'options' => $chapter_file_options
+				) );
+
+				$shownotes_options = array(
+					'0'      => __( 'None', 'podlove' ),
+					'manual' => __( 'Manual Entry', 'podlove' )
+				);
+				$episode_assets = Model\EpisodeAsset::all();
+				foreach ( $episode_assets as $episode_asset ) {
+					$file_type = $episode_asset->file_type();
+					if ( $file_type && $file_type->type === 'shownotes' ) {
+						$shownotes_options[ $episode_asset->id ] = sprintf( __( 'Asset: %s', 'podlove' ), $episode_asset->title );
+					}
+				}
+				$wrapper->select( 'shownotes', array(
+					'label'   => __( 'Episode Shownotes', 'podlove' ),
+					'options' => $shownotes_options
 				) );
 			});
 		?>
